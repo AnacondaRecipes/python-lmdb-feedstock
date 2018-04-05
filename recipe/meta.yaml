@@ -41,9 +41,9 @@ test:
 about:
   home: https://lmdb.readthedocs.io/
   license: OpenLDAP
+  license_family: Other
   license_file: LICENSE
   summary: "Universal Python binding for the LMDB 'Lightning' Database"
-
   description: |
     LMDB is a fast, memory-efficient, embedded key-value store (it does
     not require running an external daemon).
