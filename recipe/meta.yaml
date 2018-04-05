@@ -12,8 +12,6 @@ source:
   fn: {{ github_name }}_{{ version }}.zip
   url: https://github.com/dw/{{ github_name }}/archive/{{ github_name }}_{{ version }}.zip
   sha256: {{ sha256 }}
-  patches:
-    - windows-skip-tests.patch
 
 build:
   number: 1
