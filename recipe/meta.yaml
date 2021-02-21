@@ -1,8 +1,8 @@
 {% set name = "python-lmdb" %}
 {% set pypi_name = "lmdb" %}
 {% set github_name = "py-lmdb" %}
-{% set version = "1.0.0" %}
-{% set sha256 = "04dc47229a114b9b75e630ce2c26c20e8c0aed5855b186a997c4485be068196c" %}
+{% set version = "1.1.1" %}
+{% set sha256 = "872aac001e5442884b9c73bd8bda51035e04b673061aedd125f62d23d4d990c1" %}
 
 package:
   name: {{ name|lower }}
