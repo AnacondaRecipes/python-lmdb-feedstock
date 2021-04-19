@@ -25,6 +25,7 @@ requirements:
     - python
     - patch-ng
     - pip
+    - cffi >=0.8
   run:
     - python
 
