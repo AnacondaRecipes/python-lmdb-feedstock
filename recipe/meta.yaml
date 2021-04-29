@@ -12,6 +12,11 @@ source:
   fn: {{ github_name }}_{{ version }}.zip
   url: https://github.com/dw/{{ github_name }}/archive/{{ github_name }}_{{ version }}.zip
   sha256: {{ sha256 }}
+  patch:
+    # 4/29/2021: Make map resize test more robust for weird-page-size OSs (After a new release 1.2.2 this patch should be deleted!):
+    # Ubuntu on PPC64LE has a 64K page size.  This impacts the minimum map
+    # size for an environment, as well as how fast a environment fills up. 
+    - 506a5345c061b6a859cc73e60694f3ebcfbd4ba9.patch
 
 build:
   number: 1
