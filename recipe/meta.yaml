@@ -11,6 +11,9 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/lmdb-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # avoid relying on /usr/bin/patch
+    - patch.patch
 
 build:
   number: 0
@@ -27,6 +30,8 @@ requirements:
     - python
     - patch-ng
     - pip
+    - setuptools
+    - wheel
   run:
     - python
 
@@ -44,7 +49,7 @@ test:
 
 about:
   home: https://lmdb.readthedocs.io/
-  license: OpenLDAP
+  license: OLDAP-2.8
   license_family: Other
   license_file: LICENSE
   summary: "Universal Python binding for the LMDB 'Lightning' Database"

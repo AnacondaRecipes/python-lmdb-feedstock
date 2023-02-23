@@ -1,0 +1,42 @@
+diff --git a/setup.py b/setup.py
+index 62d6384..06c19dd 100644
+--- a/setup.py
++++ b/setup.py
+@@ -87,11 +87,10 @@ else:
+     patch_lmdb_source = True
+ 
+ if patch_lmdb_source:
+-    if sys.platform.startswith('win'):
+-        try:
+-            import patch_ng as patch
+-        except ImportError:
+-            raise Exception('Building py-lmdb from source on Windows requires the "patch-ng" python module.')
++    try:
++        import patch_ng as patch
++    except ImportError:
++        raise Exception('Building py-lmdb from source requires the "patch-ng" python module.')
+ 
+     # Clean out any previously patched files
+     dest = 'build' + os.sep + 'lib'
+@@ -107,16 +106,11 @@ if patch_lmdb_source:
+     shutil.copytree('lib', dest)
+ 
+     # Copy away the lmdb source then patch it
+-    if sys.platform.startswith('win'):
+-        patchfile = 'lib' + os.sep + 'py-lmdb' + os.sep + 'env-copy-txn.patch'
+-        patchset = patch.fromfile(patchfile)
+-        rv = patchset.apply(3, root=dest)
+-        if not rv:
+-            raise Exception('Applying patch failed')
+-    else:
+-        rv = os.system('/usr/bin/patch -N -p3 -d build/lib < lib/py-lmdb/env-copy-txn.patch')
+-        if rv:
+-            raise Exception('Applying patch failed')
++    patchfile = 'lib' + os.sep + 'py-lmdb' + os.sep + 'env-copy-txn.patch'
++    patchset = patch.fromfile(patchfile)
++    rv = patchset.apply(3, root=dest)
++    if not rv:
++        raise Exception('Applying patch failed')
+ 
+ # distutils perplexingly forces NDEBUG for package code!
+ extra_compile_args += ['-UNDEBUG']
