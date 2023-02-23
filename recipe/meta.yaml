@@ -1,25 +1,19 @@
 {% set name = "python-lmdb" %}
 {% set pypi_name = "lmdb" %}
 {% set github_name = "py-lmdb" %}
-{% set version = "1.2.1" %}
-{% set sha256 = "470dde9838802e403cb0bf201e3af7e0ee4f027c1ec2d3b3b34dbedfc85f702f" %}
+{% set version = "1.4.0" %}
+{% set sha256 = "39f6c4ee145d28d17025d350720abb6f95db816514e868db57444fdef51cbb47" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ github_name }}_{{ version }}.zip
-  url: https://github.com/dw/{{ github_name }}/archive/{{ github_name }}_{{ version }}.zip
+  url: https://pypi.io/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/lmdb-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # 4/29/2021: Make map resize test more robust for weird-page-size OSs (After a new release 1.2.2 this patch should be deleted!):
-    # Ubuntu on PPC64LE has a 64K page size.  This impacts the minimum map
-    # size for an environment, as well as how fast a environment fills up. 
-    - 506a5345c061b6a859cc73e60694f3ebcfbd4ba9.patch
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
@@ -40,10 +34,12 @@ test:
     - tests
   requires:
     - pytest
+    - pip
   imports:
     - lmdb
   commands:
     - py.test tests
+    - pip check
 
 about:
   home: https://lmdb.readthedocs.io/
@@ -60,7 +56,7 @@ about:
     python-lmdb is a Python binding for LMDB including a bundled
     version of LMDB.
   doc_url: https://lmdb.readthedocs.io/
-  dev_url: https://github.com/dw/py-lmdb/
+  dev_url: https://github.com/jnwatson/py-lmdb
 
 extra:
   recipe-maintainers:
