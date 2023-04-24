@@ -1,16 +1,12 @@
-{% set name = "python-lmdb" %}
-{% set pypi_name = "lmdb" %}
-{% set github_name = "py-lmdb" %}
-{% set version = "1.4.0" %}
-{% set sha256 = "39f6c4ee145d28d17025d350720abb6f95db816514e868db57444fdef51cbb47" %}
+{% set version = "1.4.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: python-lmdb
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/lmdb-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://github.com/jnwatson/py-lmdb/archive/refs/tags/py-lmdb_{{ version }}.tar.gz
+  sha256: c574035dd85ef7f5b1d6d9c9f639fcaff51fcf85a397c5b6d721e161e6077f51
   patches:
     # avoid relying on /usr/bin/patch
     - patch.patch
