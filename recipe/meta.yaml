@@ -44,7 +44,7 @@ test:
     - pip check
 
 about:
-  home: https://lmdb.readthedocs.io/
+  home: https://github.com/jnwatson/py-lmdb
   license: OLDAP-2.8
   license_family: Other
   license_file: LICENSE
