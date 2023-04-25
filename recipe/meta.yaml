@@ -9,7 +9,7 @@ source:
   sha256: c574035dd85ef7f5b1d6d9c9f639fcaff51fcf85a397c5b6d721e161e6077f51
   patches:
     # avoid relying on /usr/bin/patch
-    - patch.patch
+    # - patch.patch
 
 build:
   number: 0
@@ -39,7 +39,7 @@ test:
   imports:
     - lmdb
   commands:
-    - py.test tests
+    - pytest tests
     - pip check
 
 about:
