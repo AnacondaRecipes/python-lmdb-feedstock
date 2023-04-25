@@ -54,3 +54,9 @@ about:
     version of LMDB.
   doc_url: https://lmdb.readthedocs.io/
   dev_url: https://github.com/jnwatson/py-lmdb
+
+extra:
+  recipe-maintainers:
+    - pitrou
+    - h-vetinari
+    - xhochy
