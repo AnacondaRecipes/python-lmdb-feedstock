@@ -1,15 +1,13 @@
 {% set version = "1.4.1" %}
-
 package:
   name: python-lmdb
   version: {{ version }}
-
 source:
   url: https://github.com/jnwatson/py-lmdb/archive/refs/tags/py-lmdb_{{ version }}.tar.gz
   sha256: c574035dd85ef7f5b1d6d9c9f639fcaff51fcf85a397c5b6d721e161e6077f51
   patches:
     # avoid relying on /usr/bin/patch
-    # - patch.patch
+    - patch.patch
 
 build:
   number: 0
@@ -29,7 +27,6 @@ requirements:
     - wheel
   run:
     - python
-
 test:
   source_files:
     - tests
@@ -41,7 +38,6 @@ test:
   commands:
     - py.test tests
     - pip check
-
 about:
   home: https://github.com/jnwatson/py-lmdb
   license: OLDAP-2.8
@@ -56,9 +52,3 @@ about:
     disk-based databases.
     python-lmdb is a Python binding for LMDB including a bundled
     version of LMDB.
-  doc_url: https://lmdb.readthedocs.io/
-  dev_url: https://github.com/jnwatson/py-lmdb
-
-extra:
-  recipe-maintainers:
-    - pitrou
