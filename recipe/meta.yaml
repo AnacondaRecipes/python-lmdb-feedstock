@@ -39,7 +39,7 @@ test:
   imports:
     - lmdb
   commands:
-    - pytest tests
+    - py.test tests
     - pip check
 
 about:
