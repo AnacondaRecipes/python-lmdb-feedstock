@@ -1,24 +1,17 @@
-{% set name = "python-lmdb" %}
-{% set pypi_name = "lmdb" %}
-{% set github_name = "py-lmdb" %}
-{% set version = "1.4.0" %}
-{% set sha256 = "39f6c4ee145d28d17025d350720abb6f95db816514e868db57444fdef51cbb47" %}
-
+{% set version = "1.4.1" %}
 package:
-  name: {{ name|lower }}
+  name: python-lmdb
   version: {{ version }}
-
 source:
-  url: https://pypi.io/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/lmdb-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://github.com/jnwatson/py-lmdb/archive/refs/tags/py-lmdb_{{ version }}.tar.gz
+  sha256: c574035dd85ef7f5b1d6d9c9f639fcaff51fcf85a397c5b6d721e161e6077f51
   patches:
     # avoid relying on /usr/bin/patch
     - patch.patch
 
 build:
   number: 0
-  skip: true  # [s390x]
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  script: {{ PYTHON }} -m pip install .  --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -34,7 +27,6 @@ requirements:
     - wheel
   run:
     - python
-
 test:
   source_files:
     - tests
@@ -44,11 +36,10 @@ test:
   imports:
     - lmdb
   commands:
-    - py.test tests
+    - pytest tests
     - pip check
-
 about:
-  home: https://lmdb.readthedocs.io/
+  home: https://github.com/jnwatson/py-lmdb
   license: OLDAP-2.8
   license_family: Other
   license_file: LICENSE
@@ -67,3 +58,5 @@ about:
 extra:
   recipe-maintainers:
     - pitrou
+    - h-vetinari
+    - xhochy
