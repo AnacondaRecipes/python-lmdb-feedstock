@@ -25,16 +25,16 @@ index 62d6384..06c19dd 100644
 -    if sys.platform.startswith('win'):
 -        patchfile = 'lib' + os.sep + 'py-lmdb' + os.sep + 'env-copy-txn.patch'
 -        patchset = patch.fromfile(patchfile)
--        rv = patchset.apply(3, root=dest)
+-        rv = patchset.apply(2, root=dest)
 -        if not rv:
 -            raise Exception('Applying patch failed')
 -    else:
--        rv = os.system('/usr/bin/patch -N -p3 -d build/lib < lib/py-lmdb/env-copy-txn.patch')
+-        rv = os.system('patch -N -p3 -d build/lib < lib/py-lmdb/env-copy-txn.patch')
 -        if rv:
 -            raise Exception('Applying patch failed')
 +    patchfile = 'lib' + os.sep + 'py-lmdb' + os.sep + 'env-copy-txn.patch'
 +    patchset = patch.fromfile(patchfile)
-+    rv = patchset.apply(3, root=dest)
++    rv = patchset.apply(2, root=dest)
 +    if not rv:
 +        raise Exception('Applying patch failed')
  
