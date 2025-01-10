@@ -1,10 +1,10 @@
-{% set version = "1.4.1" %}
+{% set version = "1.6.2" %}
 package:
   name: python-lmdb
   version: {{ version }}
 source:
   url: https://github.com/jnwatson/py-lmdb/archive/refs/tags/py-lmdb_{{ version }}.tar.gz
-  sha256: c574035dd85ef7f5b1d6d9c9f639fcaff51fcf85a397c5b6d721e161e6077f51
+  sha256: 992fc8a5511d7c84a1ab6889d0d2ff957d452a00fc87167a6dc36ba42903b519
   patches:
     # avoid relying on /usr/bin/patch
     - patch.patch
