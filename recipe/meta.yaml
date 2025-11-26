@@ -64,3 +64,5 @@ extra:
     - pitrou
     - h-vetinari
     - xhochy
+  skip-lints:
+    - host_section_needs_exact_pinnings
