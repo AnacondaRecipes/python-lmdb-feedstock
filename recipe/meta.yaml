@@ -1,13 +1,15 @@
-{% set version = "1.6.2" %}
+{% set name = "python-lmdb" %}
+{% set version = "1.7.5" %}
+
 package:
-  name: python-lmdb
+  name: {{ name }}
   version: {{ version }}
+
 source:
-  url: https://github.com/jnwatson/py-lmdb/archive/refs/tags/py-lmdb_{{ version }}.tar.gz
-  sha256: 992fc8a5511d7c84a1ab6889d0d2ff957d452a00fc87167a6dc36ba42903b519
-  patches:
-    # avoid relying on /usr/bin/patch
-    - patch.patch
+  url: https://github.com/jnwatson/py-{{ name.split('-')[1] }}/archive/refs/tags/py-{{ name.split('-')[1] }}_{{ version }}.tar.gz
+  sha256: 715a642f6d8df1dbd2ad47d30a567982350213388ab4559fb418be4c1eb3a320
+  patches:  # [win]
+    - patches/0001-typedef-pid_t-on-win.patch  # [win]
 
 build:
   number: 0
@@ -15,29 +17,31 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - patch     # [not win]
-    - m2-patch  # [win]
   host:
-    - python
-    - patch-ng
     - pip
+    - python
     - setuptools
     - wheel
+    - cffi >=0.8
+    - patch-ng  # [win]
   run:
     - python
+
 test:
   source_files:
     - tests
-  requires:
-    - pytest
-    - pip
   imports:
     - lmdb
   commands:
-    - pytest tests
     - pip check
+    - pytest tests
+  requires:
+    - pip
+    - pytest
+
 about:
   home: https://github.com/jnwatson/py-lmdb
   license: OLDAP-2.8
@@ -52,7 +56,7 @@ about:
     disk-based databases.
     python-lmdb is a Python binding for LMDB including a bundled
     version of LMDB.
-  doc_url: https://lmdb.readthedocs.io/
+  doc_url: https://lmdb.readthedocs.io
   dev_url: https://github.com/jnwatson/py-lmdb
 
 extra:
@@ -60,3 +64,5 @@ extra:
     - pitrou
     - h-vetinari
     - xhochy
+  skip-lints:
+    - host_section_needs_exact_pinnings
