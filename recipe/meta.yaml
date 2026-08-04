@@ -1,5 +1,5 @@
 {% set name = "python-lmdb" %}
-{% set version = "1.7.5" %}
+{% set version = "2.3.0" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/jnwatson/py-{{ name.split('-')[1] }}/archive/refs/tags/py-{{ name.split('-')[1] }}_{{ version }}.tar.gz
-  sha256: 715a642f6d8df1dbd2ad47d30a567982350213388ab4559fb418be4c1eb3a320
+  sha256: 674474011f9947c5b22b24e5cc8995d8c759d8e697cf273770dff3984f88a9ec
   patches:  # [win]
     - patches/0001-typedef-pid_t-on-win.patch  # [win]
 
@@ -47,7 +47,7 @@ about:
   license: OLDAP-2.8
   license_family: Other
   license_file: LICENSE
-  summary: "Universal Python binding for the LMDB 'Lightning' Database"
+  summary: Universal Python binding for the LMDB 'Lightning' Database
   description: |
     LMDB is a fast, memory-efficient, embedded key-value store (it does
     not require running an external daemon).
