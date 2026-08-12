@@ -6,14 +6,18 @@ package:
   version: {{ version }}
 
 source:
+  # GitHub tag py-lmdb_{{ version }}; PyPI project name is "lmdb"
   url: https://github.com/jnwatson/py-{{ name.split('-')[1] }}/archive/refs/tags/py-{{ name.split('-')[1] }}_{{ version }}.tar.gz
   sha256: 674474011f9947c5b22b24e5cc8995d8c759d8e697cf273770dff3984f88a9ec
   patches:  # [win]
+    # MSVC lacks pid_t; still required on 2.3.0 (cpython.c uses pid_t for fork/pid cache)
     - patches/0001-typedef-pid_t-on-win.patch  # [win]
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install .  --no-deps --no-build-isolation -vv
+  # upstream python_requires>=3.9 (2.0.0+)
+  skip: true  # [py<39]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -25,6 +29,7 @@ requirements:
     - python
     - setuptools
     - wheel
+    # pyproject build-system + CFFI backend path; CPython default build does not link it
     - cffi >=0.8
     - patch-ng  # [win]
   run:
