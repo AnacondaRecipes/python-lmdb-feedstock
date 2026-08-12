@@ -42,7 +42,10 @@ test:
     - lmdb
   commands:
     - pip check
-    - pytest tests
+    # LMDB page-layout / CVE harnesses assume x86_64 page geometry; on
+    # linux-aarch64 LEAF2 pages are not produced and tree depth stays <3.
+    - pytest tests  # [not (linux and aarch64)]
+    - pytest tests --deselect=tests/cve_test.py::Leaf2KeySizeTest::test_corrupt_mp_pad_huge --deselect=tests/cve_test.py::Leaf2KeySizeTest::test_corrupt_mp_pad_zero --deselect=tests/cve_test.py::PageSplitNodeDszTest::test_corrupt_nodedsz_triggers_split_error --deselect=tests/mdb_layout_test.py::BranchPageTest::test_deep_tree  # [linux and aarch64]
   requires:
     - pip
     - pytest
