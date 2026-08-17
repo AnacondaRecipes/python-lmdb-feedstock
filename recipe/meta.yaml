@@ -1,19 +1,23 @@
 {% set name = "python-lmdb" %}
-{% set version = "1.7.5" %}
+{% set version = "2.3.0" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
+  # GitHub tag py-lmdb_{{ version }}; PyPI project name is "lmdb"
   url: https://github.com/jnwatson/py-{{ name.split('-')[1] }}/archive/refs/tags/py-{{ name.split('-')[1] }}_{{ version }}.tar.gz
-  sha256: 715a642f6d8df1dbd2ad47d30a567982350213388ab4559fb418be4c1eb3a320
+  sha256: 674474011f9947c5b22b24e5cc8995d8c759d8e697cf273770dff3984f88a9ec
   patches:  # [win]
+    # MSVC lacks pid_t; still required on 2.3.0 (cpython.c uses pid_t for fork/pid cache)
     - patches/0001-typedef-pid_t-on-win.patch  # [win]
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install .  --no-deps --no-build-isolation -vv
+  # upstream python_requires>=3.9 (2.0.0+)
+  skip: true  # [py<39]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -25,6 +29,7 @@ requirements:
     - python
     - setuptools
     - wheel
+    # pyproject build-system + CFFI backend path; CPython default build does not link it
     - cffi >=0.8
     - patch-ng  # [win]
   run:
@@ -37,7 +42,10 @@ test:
     - lmdb
   commands:
     - pip check
-    - pytest tests
+    # LMDB page-layout / CVE harnesses assume x86_64 page geometry; on
+    # linux-aarch64 LEAF2 pages are not produced and tree depth stays <3.
+    - pytest tests  # [not (linux and aarch64)]
+    - pytest tests --deselect=tests/cve_test.py::Leaf2KeySizeTest::test_corrupt_mp_pad_huge --deselect=tests/cve_test.py::Leaf2KeySizeTest::test_corrupt_mp_pad_zero --deselect=tests/cve_test.py::PageSplitNodeDszTest::test_corrupt_nodedsz_triggers_split_error --deselect=tests/mdb_layout_test.py::BranchPageTest::test_deep_tree  # [linux and aarch64]
   requires:
     - pip
     - pytest
@@ -47,7 +55,7 @@ about:
   license: OLDAP-2.8
   license_family: Other
   license_file: LICENSE
-  summary: "Universal Python binding for the LMDB 'Lightning' Database"
+  summary: Universal Python binding for the LMDB 'Lightning' Database
   description: |
     LMDB is a fast, memory-efficient, embedded key-value store (it does
     not require running an external daemon).
